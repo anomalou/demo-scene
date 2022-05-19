@@ -11,10 +11,11 @@
 #define VP_WIDTH W_WIDTH
 #define VP_HEIGHT W_HEIGHT
 
+//видимый объем
 #define PROJ_SPACE 10.0
-
+//скорость поворота камеры
 #define ROTATION_SPEED 1.0
-
+//скорость перемещения камеры
 #define CAMERA_SPEED 1.0
 
 struct vec2 {
@@ -32,26 +33,43 @@ void display();
 void processKey(int keycode, int x, int y);
 
 void init();
+//инициализация проекционной матрицы
 void initMatrix();
+//включение и выключение света и текстурирование
 void enableModes();
+//влючение и выключение, а так же настройка GL_LIGHT0 и GL_LIGHT1
 void enableLight();
+//влючение и выключение, а так же настройка GL_LIGHT2
 void enableFlashlight();
 
+//отрисовка сцены
 void drawScene();
 
+//переместить камеру с заданной скоростью
 void moveCamera(GLfloat speed);
+/*повернуть камеру на заданный угол, относительно вектора проведенного из текущего положения камеры
+к заданной точке
+*/
 void rotateCamera(GLfloat angle, GLfloat x, GLfloat y, GLfloat z);
 
+//позиция камеры
 vec3 v3CamPos;
+//вектор направления взгляда камеры
 vec3 v3CamView;
+//вектор указывающий верх камеры
 vec3 v3CamUp;
 
+//интенсивность свечения GL_LIGHT1
 GLfloat light_intense = 0.0;
 
+//включить выключить режим расчета света
 bool enableLightning = true;
+//включить выключить наложение текстур
 bool enableTextures = true;
 
+//включить выключить GL_LIGHT0
 bool enableLight0 = true;
+//включить выключить GL_LIGHT2
 bool enableFlashlight2 = false;
 
 int main(int argc, char *argv[])
