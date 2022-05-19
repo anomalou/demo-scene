@@ -2,29 +2,61 @@
 #include "models.h"
 
 void setCarpetMaterial() {
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, new GLfloat[]{ 0.2, 0.2, 0.2, 1.0 });
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, new GLfloat[]{ 0.8, 0.8, 0.8, 1.0 });
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, new GLfloat[]{ 0.2, 0.2, 1.0, 1.0 });
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, new GLfloat[]{ 0.5, 0.5, 0.5, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialfv(GL_FRONT, GL_EMISSION, new GLfloat[]{ 0.0, 0.0, 0.8, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 0.0f);
 }
 
 void setFloorMaterial() {
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, new GLfloat[]{ 0.7, 0.7, 0.7, 1.0 });
+	glMaterialfv(GL_FRONT, GL_AMBIENT, new GLfloat[]{ 0.0, 0.0, 0.0, 1.0 });
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, new GLfloat[]{ 0.8, 0.8, 0.8, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
+}
+
+void setWallMaterial() {
+	glMaterialfv(GL_FRONT, GL_AMBIENT, new GLfloat[]{ 0.0, 0.0, 0.0, 1.0 });
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, new GLfloat[]{ 0.5, 0.5, 0.5, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
 }
 
 void setTableMaterial() {
-
+	glMaterialfv(GL_FRONT, GL_AMBIENT, new GLfloat[]{ 0.0, 0.0, 0.0, 1.0 });
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, new GLfloat[]{ 0.8, 0.8, 0.8, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 20.0f);
 }
 
 void setNewspaperMaterial() {
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, new GLfloat[]{ 0.2, 0.2, 0.2, 1.0 });
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, new GLfloat[]{ 0.7, 0.7, 0.7, 1.0 });
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, new GLfloat[]{ 0.1, 0.1, 0.1, 1.0 });
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, new GLfloat[]{ 0.6, 0.6, 0.6, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 10.0f);
 }
 
-void setCoffeeMaterial() {
-
+void setLampMaterial() {
+	glMaterialfv(GL_FRONT, GL_AMBIENT, new GLfloat[]{ 0.4, 0.4, 0.4, 1.0 });
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, new GLfloat[]{ 0.8, 0.8, 0.8, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 0.0f);
 }
 
-void setCupMaterial() {
+void setBallMaterial() {
+	glMaterialfv(GL_FRONT, GL_AMBIENT, new GLfloat[]{ 0.1, 0.1, 0.1, 1.0 });
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, new GLfloat[]{ 0.7, 0.1, 0.1, 1.0 });
+	glMaterialfv(GL_FRONT, GL_SPECULAR, new GLfloat[]{ 1.0, 1.0, 1.0, 1.0 });
+	glMaterialf(GL_FRONT, GL_SHININESS, 128.0f);
+}
 
+void enableEmission() {
+	glMaterialfv(GL_FRONT, GL_EMISSION, new GLfloat[]{ 0.8, 0.8, 0.8, 1.0 });
+}
+
+void disableEmission() {
+	glMaterialfv(GL_FRONT, GL_EMISSION, new GLfloat[]{ 0.0, 0.0, 0.0, 1.0 });
 }
 
 void drawPlate(int width, int height, int tex_s, int tex_t) {
@@ -90,53 +122,88 @@ void drawAxis() {
 
 void drawTableLeg() {
 	glPushMatrix();
-	glScalef(0.2, TABLE_HEIGHT, 0.2);
+	glScalef(TABLE_LEG_WIDTH, TABLE_HEIGHT, TABLE_LEG_WIDTH);
 	glutSolidCube(1.0);
 	glPopMatrix();
 }
 
 void drawTable() {
+	glColor3f(0, 1, 1);
 	glPushMatrix();
-	glScalef(TABLE_WIDTH, 0.2, TABLE_LENGTH);
+
+	glTranslatef(0, TABLE_HEIGHT, 0);
+
+	glPushMatrix();
+	glTranslatef(0, TABLE_LEG_WIDTH / 2.0, 0);
+	glScalef(TABLE_WIDTH, TABLE_LEG_WIDTH, TABLE_LENGTH);
 	glutSolidCube(1.0);
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-TABLE_WIDTH / 2 + 0.2, -TABLE_HEIGHT / 2, -TABLE_LENGTH / 2 + 0.2);
+	glTranslatef(-TABLE_WIDTH / 2 + TABLE_LEG_WIDTH, -TABLE_HEIGHT / 2, -TABLE_LENGTH / 2 + TABLE_LEG_WIDTH);
 	drawTableLeg();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-TABLE_WIDTH / 2 + 0.2, -TABLE_HEIGHT / 2, TABLE_LENGTH / 2 - 0.2);
+	glTranslatef(-TABLE_WIDTH / 2 + TABLE_LEG_WIDTH, -TABLE_HEIGHT / 2, TABLE_LENGTH / 2 - TABLE_LEG_WIDTH);
 	drawTableLeg();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(TABLE_WIDTH / 2 - 0.2, -TABLE_HEIGHT / 2, -TABLE_LENGTH / 2 + 0.2);
+	glTranslatef(TABLE_WIDTH / 2 - TABLE_LEG_WIDTH, -TABLE_HEIGHT / 2, -TABLE_LENGTH / 2 + TABLE_LEG_WIDTH);
 	drawTableLeg();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(TABLE_WIDTH / 2 - 0.2, -TABLE_HEIGHT / 2, TABLE_LENGTH / 2 - 0.2);
+	glTranslatef(TABLE_WIDTH / 2 - TABLE_LEG_WIDTH, -TABLE_HEIGHT / 2, TABLE_LENGTH / 2 - TABLE_LEG_WIDTH);
 	drawTableLeg();
+	glPopMatrix();
+
 	glPopMatrix();
 }
 
 void drawCarpet() {
+	glColor3f(1, 1, 0);
 	glPushMatrix();
 
 	glScalef(CARPET_WIDTH, CARPET_LENGTH, 1);
 
-	drawPlate(10, 10, 0, 0);
+	drawPlate(20, 40, 20, 40);
 	glPopMatrix();
 }
 
 void drawFloor() {
+	glColor3f(0, 0, 1);
 	glPushMatrix();
+	glRotatef(-90, 1, 0, 0);
 
 	glScalef(FLOOR_WIDTH, FLOOR_LENGTH, 1);
 
-	drawPlate(20, 40, 2, 10);
+	drawPlate(20, 20, 4, 4);
+
+	glPopMatrix();
+}
+
+void drawWalls() {
+	glColor3f(0, 1, 0);
+	glPushMatrix();
+	glRotatef(-90, 1, 0, 0);
+
+	glTranslatef(0, 0, FLOOR_LENGTH / 2.0);
+	
+	glPushMatrix();
+	glRotatef(90, 1, 0, 0);
+	glScalef(FLOOR_WIDTH, FLOOR_LENGTH, 1);
+	glTranslatef(0, 0, -FLOOR_LENGTH / 2.0f);
+	drawPlate(20, 20, 5, 5);
+	glPopMatrix();
+
+	glRotatef(90, 1, 0, 0);
+	glRotatef(90, 0, 1, 0);
+	glScalef(FLOOR_WIDTH, FLOOR_LENGTH, 1);
+	glTranslatef(0, 0, -FLOOR_WIDTH / 2.0f);
+	drawPlate(20, 20, 5, 5);
+
 
 	glPopMatrix();
 }
@@ -175,6 +242,7 @@ void drawNewspaperSheet() {
 }
 
 void drawNewspaper() {
+	glColor3f(1, 1, 1);
 	glPushMatrix();
 	drawNewspaperSheet();
 	glScalef(0.8, 1, 0.8);
@@ -189,6 +257,24 @@ void drawNewspaper() {
 	glPopMatrix();
 }
 
-void drawLamp() {
+void drawLamp(bool isEnabled) {
+	glColor3f(1, 0, 0);
+	glPushMatrix();
+	glPushMatrix();
+	glTranslatef(0, LAMP_LENGTH / 2.0, 0);
+	glScalef(LAMP_WIRE_WIDTH, LAMP_LENGTH, LAMP_WIRE_WIDTH);
+	setTableMaterial();
+	glutSolidCube(1);
+	glPopMatrix();
+	setLampMaterial();
+	if(isEnabled)
+		enableEmission();
+	glutSolidSphere(LAMP_SCALE, 10, 10);
+	disableEmission();
+	glPopMatrix();
+}
 
+void drawBall() {
+	glColor3f(1, 0, 0);
+	glutSolidSphere(BALL_SCALE / 2.0, 20, 20);
 }

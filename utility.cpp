@@ -8,6 +8,7 @@ void initTextures() {
 	registerTexture(ilLoadTexture(L"C:/labs/Semestr 6/Graphics/resultwork/resultwork/bmp/pnewspaper.png"), "newspaper");
 	registerTexture(ilLoadTexture(L"C:/labs/Semestr 6/Graphics/resultwork/resultwork/bmp/table.png"), "table");
 	registerTexture(ilLoadTexture(L"C:/labs/Semestr 6/Graphics/resultwork/resultwork/bmp/floor.png"), "floor");
+	registerTexture(ilLoadTexture(L"C:/labs/Semestr 6/Graphics/resultwork/resultwork/bmp/wall.png"), "wall");
 	registerTexture(ilLoadTexture(L"C:/labs/Semestr 6/Graphics/resultwork/resultwork/bmp/carpet.png"), "carpet");
 }
 
@@ -46,6 +47,7 @@ void registerTexture(Texture texture, string byName) {
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_SRC_ALPHA);
 
 	delete texture.data;
 
